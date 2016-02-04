@@ -1,0 +1,26 @@
+var primes:List[Int] = List(2)
+def nthPrime(n:Int):Int = {
+	if(n<= primes.length) {
+		return primes(n-1)
+	} else {
+		while(n>primes.length) {
+			primes = primes:+findNextPrime()
+		}
+		return primes(n-1)
+	}
+}
+
+def findNextPrime():Int = {
+	var test = primes.last
+	var bools:List[Boolean] = List()
+	var break = false
+	while(!break) {
+		test+=1
+		for(i <- 0 to primes.length-1) {
+			bools= bools:+(test%primes(i) != 0)
+		}
+		break = bools.reduce(_&&_)
+		bools = List()
+	}
+	return test
+}
